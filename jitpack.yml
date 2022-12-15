@@ -39,6 +39,7 @@ jobs:
       install:
         - echo y | sdkmanager "cmake;3.22.1"
       before_install:
+        - yes | sdkmanager "cmake;3.22.1"
         - touch $HOME/.android/repositories.cfg
       before_script:
         - export ANDROID_NDK_ROOT=${ANDROID_HOME}ndk/21.3.6528147
@@ -86,7 +87,8 @@ jobs:
 #        - echo y | sdkmanager "ndk;21.3.6528147"
         - echo y | sdkmanager "cmake;3.22.1"
       before_install:
-        - touch $HOME/.android/repositories.cfg
+        - touch $HOME/.android/repositories.cfg'
+        - yes | sdkmanager "cmake;3.22.1"
       before_script:
         - export ANDROID_NDK_ROOT=${ANDROID_HOME}ndk/21.3.6528147
         - rm -f ./build.log
