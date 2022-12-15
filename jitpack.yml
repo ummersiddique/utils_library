@@ -1,7 +1,6 @@
 branches:
   only:
     - master
-    - development
 git:
   quiet: true
   depth: false
@@ -32,14 +31,13 @@ jobs:
         components:
           - tools
           - platform-tools
-          - build-tools-28.0.3
-          - android-24
+          - build-tools-32.0.0
+          - android-32
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
       install:
-        - echo y | sdkmanager "ndk;21.3.6528147"
-        - echo y | sdkmanager "cmake;3.10.2.4988404"
+        - echo y | sdkmanager "cmake;3.22.1"
       before_install:
         - touch $HOME/.android/repositories.cfg
       before_script:
@@ -85,8 +83,8 @@ jobs:
           - extra-google-m2repository
           - extra-android-m2repository
       install:
-        - echo y | sdkmanager "ndk;21.3.6528147"
-        - echo y | sdkmanager "cmake;3.10.2.4988404"
+#        - echo y | sdkmanager "ndk;21.3.6528147"
+        - echo y | sdkmanager "cmake;3.22.1"
       before_install:
         - touch $HOME/.android/repositories.cfg
       before_script:
@@ -100,75 +98,3 @@ jobs:
         - tail -30 ./src/ffmpeg/ffbuild/config.log
       script:
         - bash ./android.sh --lts --no-output-redirection -d
-    - name: "iOS Main Build"
-      language: objective-c
-      os: osx
-      osx_image: xcode10.2
-      addons:
-        homebrew:
-          packages:
-            - nasm
-          update: true
-      before_script:
-        - rm -f ./build.log
-      after_success:
-        - grep -e INFO ./build.log | grep build
-      after_failure:
-        - tail -30 ./build.log
-        - tail -30 ./src/ffmpeg/ffbuild/config.log
-      script:
-        - bash ./ios.sh --no-output-redirection --disable-arm64e
-    - name: "iOS LTS Build"
-      language: objective-c
-      osx_image: xcode7.3
-      os: osx
-      addons:
-        homebrew:
-          packages:
-            - nasm
-          update: true
-      before_script:
-        - rm -f ./build.log
-      after_success:
-        - grep -e INFO ./build.log | grep build
-      after_failure:
-        - tail -30 ./build.log
-        - tail -30 ./src/ffmpeg/ffbuild/config.log
-      script:
-        - bash ./ios.sh --lts --no-output-redirection --disable-armv7 --disable-armv7s --disable-i386
-    - name: "tvOS Main Build"
-      language: objective-c
-      os: osx
-      osx_image: xcode10.2
-      addons:
-        homebrew:
-          packages:
-            - nasm
-          update: true
-      before_script:
-        - rm -f ./build.log
-      after_success:
-        - grep -e INFO ./build.log | grep build
-      after_failure:
-        - tail -30 ./build.log
-        - tail -30 ./src/ffmpeg/ffbuild/config.log
-      script:
-        - bash ./tvos.sh --no-output-redirection
-    - name: "tvOS LTS Build"
-      language: objective-c
-      os: osx
-      osx_image: xcode7.3
-      addons:
-        homebrew:
-          packages:
-            - nasm
-          update: true
-      before_script:
-        - rm -f ./build.log
-      after_success:
-        - grep -e INFO ./build.log | grep build
-      after_failure:
-        - tail -30 ./build.log
-        - tail -30 ./src/ffmpeg/ffbuild/config.log
-      script:
-        - bash ./tvos.sh --lts --no-output-redirection
