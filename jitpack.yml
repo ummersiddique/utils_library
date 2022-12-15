@@ -1,5 +1,12 @@
 jdk:
   - openjdk11
+before_script:
+  - apt-get update
+  - apt-get install -y cmake
+  - cmake .
+
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
 before_install:
   - sdk install java 11.0.10-open
   - sdk use java 11.0.10-open
